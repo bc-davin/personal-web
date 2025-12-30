@@ -6,96 +6,31 @@
       <p class="hero-subtitle">
         Full-stack developer passionate about creating innovative web solutions
       </p>
-      <div class="hero-actions">
-        <a routerLink="/projects" class="btn btn-primary">View Projects</a>
-        <a routerLink="/experience" class="btn btn-secondary">My Experience</a>
-      </div>
     </div>
   </section>
 
-  @if (loading()) {
-    <div class="loading">Loading...</div>
-  }
-
-  @if (error()) {
-    <div class="error">{{ error() }}</div>
-  }
-
-  @if (!loading() && !error()) {
-    <!-- Featured Projects Section -->
-    <section class="section">
-      <div class="section-header">
-        <h2>Featured Projects</h2>
-        <a routerLink="/projects" class="view-all">View All →</a>
+  <!-- About Section with Profile Image -->
+  <section class="section about-section">
+    <div class="about-container">
+      <div class="profile-image-container">
+        <img src="/profile.jpg" alt="Profile" class="profile-image">
       </div>
-      
-      @if (featuredProjects().length > 0) {
-        <div class="project-grid">
-          @for (project of featuredProjects(); track project._id) {
-            <div class="project-card">
-              @if (project.image_url) {
-                <div class="project-image" [style.background-image]="'url(' + project.image_url + ')'"></div>
-              }
-              <div class="project-content">
-                <h3>{{ project.title }}</h3>
-                <p>{{ project.description }}</p>
-                <div class="technologies">
-                  @for (tech of project.technologies; track tech) {
-                    <span class="tech-badge">{{ tech }}</span>
-                  }
-                </div>
-                <div class="project-links">
-                  @if (project.github_url) {
-                    <a [href]="project.github_url" target="_blank" rel="noopener">GitHub</a>
-                  }
-                  @if (project.live_url) {
-                    <a [href]="project.live_url" target="_blank" rel="noopener">Live Demo</a>
-                  }
-                </div>
-              </div>
-            </div>
-          }
+      <div class="about-content">
+        <div class="section-header">
+          <h2>About Me</h2>
         </div>
-      } @else {
-        <p class="empty-message">No featured projects yet.</p>
-      }
-    </section>
-
-    <!-- Recent Blog Posts Section -->
-    <section class="section">
-      <div class="section-header">
-        <h2>Recent Blog Posts</h2>
-        <a routerLink="/blog" class="view-all">View All →</a>
+        <p>
+          I'm a passionate full-stack developer with experience in building modern web applications.
+          I love turning complex problems into simple, beautiful, and intuitive solutions.
+        </p>
+        <p>
+          When I'm not coding, you can find me exploring new technologies, contributing to open source,
+          or sharing my knowledge through blog posts and tutorials.
+        </p>
+        <p>
+          Feel free to explore my projects and experience, or get in touch if you'd like to collaborate!
+        </p>
       </div>
-      
-      @if (recentBlogs().length > 0) {
-        <div class="blog-grid">
-          @for (blog of recentBlogs(); track blog._id) {
-            <article class="blog-card">
-              @if (blog.featured_image) {
-                <div class="blog-image" [style.background-image]="'url(' + blog.featured_image + ')'"></div>
-              }
-              <div class="blog-content">
-                <h3>
-                  <a [routerLink]="['/blog', blog._id]">{{ blog.title }}</a>
-                </h3>
-                <p class="blog-excerpt">{{ blog.excerpt || blog.content.substring(0, 150) + '...' }}</p>
-                <div class="blog-meta">
-                  <span class="author">By {{ blog.author }}</span>
-                  <span class="date">{{ blog.created_at | date: 'MMM d, yyyy' }}</span>
-                </div>
-                <div class="tags">
-                  @for (tag of blog.tags; track tag) {
-                    <span class="tag">{{ tag }}</span>
-                  }
-                </div>
-              </div>
-            </article>
-          }
-        </div>
-      } @else {
-        <p class="empty-message">No blog posts yet.</p>
-      }
-    </section>
-  }
+    </div>
+  </section>
 </div>

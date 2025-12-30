@@ -186,6 +186,38 @@
   color: #d32f2f;
 }
 
+.about-container {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.profile-image-container {
+  flex-shrink: 0;
+  
+  .profile-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.about-content {
+  flex: 1;
+  
+  .section-header {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 2rem 0;
@@ -207,5 +239,18 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-image-container {
+    .profile-image {
+      width: 200px;
+      height: 200px;
+    }
   }
 }
