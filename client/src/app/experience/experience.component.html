@@ -1,11 +1,10 @@
 <div class="experience-container">
   <header class="page-header">
     <h1>Experience</h1>
-    <p>My professional journey and work history</p>
   </header>
 
   @if (loading()) {
-    <div class="loading">Loading experience...</div>
+    <div class="loading">Loading...</div>
   }
 
   @if (error()) {
@@ -13,73 +12,57 @@
   }
 
   @if (!loading() && !error()) {
-    @if (experiences().length > 0) {
-      <div class="timeline">
-        @for (exp of experiences(); track exp._id) {
-          <article class="experience-card" [class.current]="exp.is_current">
-            <div class="timeline-marker">
-              <div class="marker-dot"></div>
-              <div class="marker-line"></div>
-            </div>
-            
-            <div class="experience-content">
-              <div class="experience-header">
-                <div class="header-main">
-                  <h2>{{ exp.title }}</h2>
-                  <h3>{{ exp.company }}</h3>
-                </div>
-                
-                @if (exp.is_current) {
-                  <span class="current-badge">Current</span>
-                }
-              </div>
-              
-              <div class="experience-meta">
-                @if (exp.location) {
-                  <span class="location">📍 {{ exp.location }}</span>
-                }
-                <span class="employment-type">{{ exp.employment_type }}</span>
-                <span class="dates">
-                  {{ formatDate(exp.start_date) }} - 
-                  @if (exp.end_date) {
-                    {{ formatDate(exp.end_date) }}
-                  } @else {
-                    Present
-                  }
-                </span>
-                <span class="duration">{{ getDuration(exp.start_date, exp.end_date) }}</span>
-              </div>
-              
-              <p class="description">{{ exp.description }}</p>
-              
-              @if (exp.responsibilities.length > 0) {
-                <div class="responsibilities">
-                  <h4>Key Responsibilities:</h4>
-                  <ul>
-                    @for (resp of exp.responsibilities; track resp) {
-                      <li>{{ resp }}</li>
-                    }
-                  </ul>
-                </div>
-              }
-              
-              @if (exp.technologies.length > 0) {
-                <div class="technologies">
-                  <h4>Technologies:</h4>
-                  <div class="tech-tags">
-                    @for (tech of exp.technologies; track tech) {
-                      <span class="tech-badge">{{ tech }}</span>
-                    }
-                  </div>
-                </div>
-              }
-            </div>
-          </article>
-        }
+    <div class="content-grid">
+      <div class="map-column">
+        <div class="map-container">
+          <div id="experience-map" class="experience-map"></div>
+        </div>
       </div>
-    } @else {
-      <div class="empty-state">
-        <p>No experience data available.</p>
+
+      <div class="timeline-column">
+        <h2 class="timeline-title">Recent Roles</h2>
+        <div class="timeline">
+          @for (exp of recentExperiences(); track exp.title + exp.company) {
+            <div class="timeline-item" (click)="navigateToExperience(exp)">
+              <div class="timeline-date">{{ formatDate(exp.start_date) }} - {{ exp.is_current ? 'Present' : formatDate(exp.end_date!) }}</div>
+              <h3 class="timeline-title-text">{{ exp.title }}</h3>
+              <div class="timeline-company">{{ exp.company }}</div>
+              <div class="timeline-badge" [style.background-color]="getEmploymentColor(exp.employment_type)">{{ exp.employment_type }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    @if (selectedExperience()) {
+      <div class="popup-overlay" (click)="resetMap()">
+        <div class="popup" (click)="$event.stopPropagation()">
+          <button class="close" (click)="resetMap()">×</button>
+          <button class="back-btn" (click)="resetMap()">← Back to Map</button>
+          
+          <h2>{{ selectedExperience()!.title }}</h2>
+          <h3>{{ selectedExperience()!.company }}</h3>
+                    <div class="employment-badge" [style.background-color]="getEmploymentTypeColor(selectedExperience()!.employment_type)">
+            {{ selectedExperience()!.employment_type }}
+          </div>
+                    <p class="meta">
+            {{ selectedExperience()!.location }} 
+            {{ formatDate(selectedExperience()!.start_date) }} - 
+            @if (selectedExperience()!.end_date) {
+              {{ formatDate(selectedExperience()!.end_date!) }}
+            } @else {
+              Present
+            }
+          </p>
+          
+          @if (selectedExperience()!.technologies.length > 0) {
+            <div class="tech">
+              @for (tech of selectedExperience()!.technologies.slice(0, 3); track tech) {
+                <span>{{ tech }}</span>
+              }
+            </div>
+          }
+        </div>
       </div>
     }
   }

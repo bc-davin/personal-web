@@ -3,6 +3,8 @@ export interface Experience {
   title: string;
   company: string;
   location?: string;
+  lat?: number;
+  lon?: number;
   description: string;
   responsibilities: string[];
   technologies: string[];
@@ -18,6 +20,8 @@ export interface ExperienceCreate {
   title: string;
   company: string;
   location?: string;
+  lat?: number;
+  lon?: number;
   description: string;
   responsibilities?: string[];
   technologies?: string[];

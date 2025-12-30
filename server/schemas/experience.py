@@ -7,6 +7,8 @@ class ExperienceBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     company: str = Field(..., min_length=1, max_length=200)
     location: Optional[str] = None
+    lat: Optional[float] = None
+    lon: Optional[float] = None
     description: str = Field(..., min_length=1)
     responsibilities: List[str] = Field(default_factory=list)
     technologies: List[str] = Field(default_factory=list)
@@ -22,6 +24,8 @@ class ExperienceUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=200)
     company: Optional[str] = Field(None, min_length=1, max_length=200)
     location: Optional[str] = None
+    lat: Optional[float] = None
+    lon: Optional[float] = None
     description: Optional[str] = Field(None, min_length=1)
     responsibilities: Optional[List[str]] = None
     technologies: Optional[List[str]] = None
